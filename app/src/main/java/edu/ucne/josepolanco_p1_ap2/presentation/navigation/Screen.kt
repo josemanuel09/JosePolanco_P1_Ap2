@@ -6,6 +6,11 @@ sealed class Screen {
     @Serializable
     data object ListScreen : Screen()
     @Serializable
-    data class RegistroScreen(val id: Int) : Screen()
+    data class RegistroScreen(val VentaId: Int) : Screen()
+    @Serializable
+    data class EditScreen(val VentaId: Int) : Screen()
+    @Serializable
+    data class DeleteScreen(val VentaId: Int) : Screen()
+
 
 }

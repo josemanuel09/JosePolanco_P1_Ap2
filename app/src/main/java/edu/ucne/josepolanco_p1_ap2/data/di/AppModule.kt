@@ -1,4 +1,4 @@
-package edu.ucne.josepolanco_p1_ap2.di
+package edu.ucne.josepolanco_p1_ap2.data.di
 
 import android.content.Context
 import androidx.room.Room
@@ -25,6 +25,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideAlgoDao(parcialRoom: ParcialRoom) = parcialRoom.AlgoDao()
+    fun provideVentaDao(parcialRoom: ParcialRoom) = parcialRoom.VentaDao()
 
 }
