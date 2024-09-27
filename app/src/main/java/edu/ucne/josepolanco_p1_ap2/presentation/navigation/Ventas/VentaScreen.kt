@@ -102,6 +102,14 @@ fun VentaBodyScreen(
                 value = uiState.nEmpresa,
                 onValueChange = onEmpresaChange
             )
+
+            if (uiState.MostrarError && uiState.nEmpresa.isBlank()) {
+                Text(
+                    text = "El nombre de la empresa no puede estar vacío",
+                    color = Color.Red,
+                    style = TextStyle(fontSize = 14.sp)
+                )
+            }
             Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedTextField(
@@ -116,6 +124,14 @@ fun VentaBodyScreen(
                     onGalonesChange(galones)
                 }
             )
+
+            if (uiState.MostrarError && uiState.galones <= 0) {
+                Text(
+                    text = "Los galones deben ser mayores que 0",
+                    color = Color.Red,
+                    style = TextStyle(fontSize = 14.sp)
+                )
+            }
             Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedTextField(
@@ -130,6 +146,14 @@ fun VentaBodyScreen(
                     onDescuentoGalonChange(descuento)
                 }
             )
+
+            if (uiState.MostrarError && uiState.descuento <= 0) {
+                Text(
+                    text = "El descuento debe ser mayor o igual a 0",
+                    color = Color.Red,
+                    style = TextStyle(fontSize = 14.sp)
+                )
+            }
             Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedTextField(
@@ -144,12 +168,21 @@ fun VentaBodyScreen(
                     onPrecioChange(precio)
                 }
             )
+
+            if (uiState.MostrarError && uiState.precio <= 0) {
+                Text(
+                    text = "El precio debe ser mayor que 0",
+                    color = Color.Red,
+                    style = TextStyle(fontSize = 14.sp)
+                )
+            }
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 label = { Text(text = "Total Descontado") },
                 value = if (uiState.totalDescontado == 0.0) "" else uiState.totalDescontado.toString(),
+                readOnly = true,
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Number
                 ),
@@ -163,6 +196,7 @@ fun VentaBodyScreen(
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 label = { Text(text = "Total") },
+                readOnly = true,
                 value = if (uiState.total == 0.0) "" else uiState.total.toString(),
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Number
@@ -195,14 +229,9 @@ fun VentaBodyScreen(
                 }
             }
 
-            uiState.errorMessage?.let { message ->
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = message,
-                    color = Color.Red,
-                    style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Bold)
-                )
-            }
+
+
         }
     }
 }
+
