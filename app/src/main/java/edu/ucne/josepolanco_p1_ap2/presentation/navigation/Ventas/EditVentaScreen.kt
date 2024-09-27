@@ -115,9 +115,6 @@ fun EditVentaBodyScreen(
                 onValueChange = onEmpresaChange
             )
             Spacer(modifier = Modifier.height(8.dp))
-
-
-
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 label = { Text(text = "Galones") },
@@ -131,7 +128,6 @@ fun EditVentaBodyScreen(
                 }
             )
             Spacer(modifier = Modifier.height(8.dp))
-
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 label = { Text(text = "Descuento Por Galon") },

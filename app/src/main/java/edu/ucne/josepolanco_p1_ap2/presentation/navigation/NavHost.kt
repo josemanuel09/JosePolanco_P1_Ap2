@@ -22,7 +22,6 @@ fun NavHostExam(
     val scope = rememberCoroutineScope()
     NavHost(navController = navHostController, startDestination = Screen.ListScreen) {
 
-
         composable<Screen.ListScreen> {
             VentaListScreen(
                 scope= scope ,
@@ -37,8 +36,6 @@ fun NavHostExam(
                 }
             )
         }
-
-
         composable<Screen.RegistroScreen> {
             val args = it.toRoute<Screen.RegistroScreen>()
             VentaScreen (
