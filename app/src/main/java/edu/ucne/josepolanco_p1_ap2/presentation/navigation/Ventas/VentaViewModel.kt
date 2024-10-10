@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.ucne.josepolanco_p1_ap2.data.local.entity.VentaEntity
 import edu.ucne.josepolanco_p1_ap2.data.repository.VentaRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -21,31 +22,51 @@ class VentaViewModel @Inject constructor(
     init {
         getVentas()
     }
+    private fun limpiarMensaje(){
+        viewModelScope.launch {
+            delay(5000)
+            _uiState.update {
+                it.copy(errorMessage = null)
+            }
+        }
+    }
+
 
     fun save(goBack: () -> Unit) {
         viewModelScope.launch {
             val state = _uiState.value
+            _uiState.update { it.copy(MostrarError = true) }
 
             when {
                 state.nEmpresa.isBlank() -> {
                     _uiState.update {
                         it.copy(errorMessage = "El nombre de la empresa no puede estar vacío")
                     }
+                    limpiarMensaje()
                 }
+
                 state.galones == null || state.galones <= 0 -> {
                     _uiState.update {
                         it.copy(errorMessage = "Los galones deben ser mayores que 0")
                     }
+                    limpiarMensaje()
+                }
+                state.descuento == null || state.descuento <= 0 ->{
+                    _uiState.update {
+                        it.copy(errorMessage = "El Descuento por galon debe ser mayor que cero")
+                    }
+                    limpiarMensaje()
                 }
                 state.precio == null || state.precio <= 0 -> {
                     _uiState.update {
                         it.copy(errorMessage = "El precio debe ser mayor que 0")
                     }
+                    limpiarMensaje()
                 }
                 else -> {
                     ventaRepository.save(state.toEntity())
                     _uiState.update {
-                        it.copy(errorMessage = null)
+                        it.copy(errorMessage = null, MostrarError = false)
                     }
                     goBack()
                 }
@@ -63,10 +84,12 @@ class VentaViewModel @Inject constructor(
                 precio = 0.0,
                 totalDescontado = 0.0,
                 total = 0.0,
-                errorMessage = null
+                errorMessage = null,
+                MostrarError = false
             )
         }
     }
+
 
     fun select(ventaId: Int) {
         viewModelScope.launch {
@@ -178,7 +201,8 @@ class VentaViewModel @Inject constructor(
         val totalDescontado: Double = 0.0,
         val total: Double = 0.0,
         val errorMessage: String? = null,
-        val ventas: List<VentaEntity> = emptyList()
+        val ventas: List<VentaEntity> = emptyList(),
+        val MostrarError: Boolean = false
     )
 
     fun UiState.toEntity() = VentaEntity(

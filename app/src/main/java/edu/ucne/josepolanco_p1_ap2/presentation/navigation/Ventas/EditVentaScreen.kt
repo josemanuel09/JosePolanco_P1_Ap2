@@ -14,10 +14,12 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -89,6 +91,11 @@ fun EditVentaBodyScreen(
                         )
                     )
                 },
+                navigationIcon = {
+                    IconButton(onClick = goBack) {
+                        Icon(Icons.Filled.ArrowBack, contentDescription = "Regresar")
+                    }
+                },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = Color(0xFF6200EE)
                 )
@@ -108,9 +115,6 @@ fun EditVentaBodyScreen(
                 onValueChange = onEmpresaChange
             )
             Spacer(modifier = Modifier.height(8.dp))
-
-
-
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 label = { Text(text = "Galones") },
@@ -124,7 +128,6 @@ fun EditVentaBodyScreen(
                 }
             )
             Spacer(modifier = Modifier.height(8.dp))
-
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 label = { Text(text = "Descuento Por Galon") },
@@ -157,7 +160,8 @@ fun EditVentaBodyScreen(
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 label = { Text(text = "Total Descontado") },
-                value = uiState.totalDescontado.toString(),
+                value = if (uiState.totalDescontado == 0.0) "" else uiState.totalDescontado.toString(),
+                readOnly = true,
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Number
                 ),
@@ -171,7 +175,8 @@ fun EditVentaBodyScreen(
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 label = { Text(text = "Total") },
-                value = uiState.total.toString(),
+                value = if (uiState.total == 0.0) "" else uiState.total.toString(),
+                readOnly = true,
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Number
                 ),

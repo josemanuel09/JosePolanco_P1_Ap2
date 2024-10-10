@@ -11,12 +11,18 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -31,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -162,6 +169,39 @@ fun VentaRow(
                     )
                 )
             }
+            IconButton(
+                onClick = { expanded = !expanded },
+                modifier = Modifier.weight(1f)
+            ){
+                Icon(Icons.Filled.MoreVert, contentDescription = "Más opciones")
+
+            }
+            DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false},
+                modifier = Modifier.background(MaterialTheme.colorScheme.surface),
+                offset = DpOffset(x= (220).dp, y = (0).dp)
+            ) {
+                DropdownMenuItem(
+                    text = { Text("Editar") },
+                    leadingIcon = { Icon(Icons.Filled.Edit, contentDescription = "Editar")},
+                    onClick = {
+                        expanded = false
+                        onEditVenta(venta.ventaId!!)
+                    }
+                )
+                DropdownMenuItem(
+                    text = { Text("Eliminar") },
+                    leadingIcon = { Icon(Icons.Filled.Delete, contentDescription = "Eliminar")},
+                    onClick = {
+                        expanded = false
+                        onDeleteVenta(venta.ventaId!!)
+
+                    }
+                )
+
+            }
+
+
+
 
 
 

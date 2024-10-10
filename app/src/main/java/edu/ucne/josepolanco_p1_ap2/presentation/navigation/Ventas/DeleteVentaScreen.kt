@@ -93,9 +93,6 @@ fun DeleteVentaBodyScreen(
                         ),
                         modifier = Modifier.padding(bottom = 4.dp)
                     )
-
-
-
                     Text(
                         text = "Galones: ${uiState.galones}",
                         style = TextStyle(
